@@ -35,18 +35,20 @@ To exercise the communication between microservices, you'll want to run at least
 Building the app creates a fully standalone executable jar. You can run multiple instances like so:
 
 ```
-target/stormpath-jjwt-microservices-tutorial-0.1.0-SNAPSHOT.jar --server.port=8080
-target/stormpath-jjwt-microservices-tutorial-0.1.0-SNAPSHOT.jar --server.port=8081
+target/stormpath-jjwt-microservices-tutorial-0.1.0-SNAPSHOT.jar --server.port=8080 &
+target/stormpath-jjwt-microservices-tutorial-0.1.0-SNAPSHOT.jar --server.port=8081 &
 ```
 
-This will run one instance on port `8080` and one on `8081`.
+This will run one instance on port `8080` and one on `8081` and they will both be put in the background.
 
 You can also use the purple Heroku button below to deploy to your own Heroku account. Setup two different instances
 so you can communicate between them.
 
-Note: all service to service communication below uses [httpie]()
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Service Registry
+
+Note: all service to service communication examples below uses [httpie](https://github.com/jkbrzt/httpie)
 
 When the application is launched, a private/public keypair is automatically created. All operations involving keys
 are handled via the `SecretService` service and exposed via endpoints in the `SecretServiceController`.
@@ -205,6 +207,3 @@ Let's see this in action. Note: this assumes that you've registered the public k
     }
     
 The above request uses the standard `Authorization` header as part of the request to the second microservice using the JWT from the first microservice.
-
-## Implementation Details
-
