@@ -4,9 +4,7 @@ The purpose of this tutorial is to demonstrate how the [JJWT](https://github.com
 
 The only dependencies are the Spring Boot Web Starter and the JJWT library.
 
-Wondering what JWTs and/or the JJWt library is all about? Click [here](https://java.jsonwebtoken.io).
-
-What follows is a little bit of background on Microservices. Feel free to skip that and jump right into the [tutorial](#building-the-app)
+Wondering what JWTs and/or the JJWT library is all about? Click [here](https://java.jsonwebtoken.io).
 
 ## What Does the App Do?
 
