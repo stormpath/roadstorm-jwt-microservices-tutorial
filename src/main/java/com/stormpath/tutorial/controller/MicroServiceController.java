@@ -6,6 +6,7 @@ import com.stormpath.tutorial.service.SecretService;
 import com.stormpath.tutorial.util.AccountResolver;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ public class MicroServiceController extends BaseController {
 
     @RequestMapping("/auth-builder")
     public JwtResponse authBuilder(@RequestBody Map<String, Object> claims) {
+        Assert.notNull(claims.get(AccountResolver.USERNAME_CLAIM));
+
         Date now = new Date();
         Date exp = new Date(System.currentTimeMillis() + (1000*60)); // 60 seconds
 

@@ -21,7 +21,6 @@ public class DefaultAccountResolver implements AccountResolver {
 
     private static final Logger log = LoggerFactory.getLogger(AccountResolver.class);
     private static final String BEARER_IDENTIFIER = "Bearer "; // space is important
-    private static final String USERNAME_CLAIM = "userName";
 
     private Map<String, Account> accounts;
 
