@@ -40,20 +40,13 @@ public class DefaultAccountResolver implements AccountResolver {
 
         // get JWT as Authorization header
         String authorization = req.getHeader("Authorization");
-        if (authorization == null) {
-            String msg = "No Authorization Header on the request";
-            log.warn(msg);
-            accountResponse.setMessage(msg);
-            return accountResponse;
-        }
+        Assert.notNull(authorization, "No Authorization Header on the request");
 
         // make sure it's bearer
-        if (!authorization.startsWith(BEARER_IDENTIFIER)) {
-            String msg = "Authorization header is not a Bearer token: " + authorization;
-            log.warn(msg);
-            accountResponse.setMessage(msg);
-            return accountResponse;
-        }
+        Assert.isTrue(
+            authorization.startsWith(BEARER_IDENTIFIER),
+            "Authorization header is not a Bearer token: " + authorization
+        );
 
         String jwt = authorization.substring(BEARER_IDENTIFIER.length());
 
