@@ -2,13 +2,11 @@
 
 The purpose of this tutorial is to demonstrate how the [JJWT](https://github.com/jwtk/jjwt) library can be used to secure microservices.
 
-The only dependencies are the Spring Boot Web Starter and the JJWT library. More robust references are included inline below for when you are considering production applications.
+The only dependencies are the Spring Boot Web Starter and the JJWT library.
+
+Wondering what JWTs and/or the JJWt library is all about? Click [here](https://java.jsonwebtoken.io).
 
 What follows is a little bit of background on Microservices. Feel free to skip that and jump right into the [tutorial](#building-the-app)
- 
-## What are Microservices?
- 
-## Should I use Miroservices for everything since they're the new hotness?
 
 ## What Does the App Do?
 
@@ -42,6 +40,9 @@ target/stormpath-jjwt-microservices-tutorial-0.1.0-SNAPSHOT.jar --server.port=80
 ```
 
 This will run one instance on port `8080` and one on `8081`.
+
+You can also use the purple Heroku button below to deploy to your own Heroku account. Setup two different instances
+so you can communicate between them.
 
 Note: all service to service communication below uses [httpie]()
 
