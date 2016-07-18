@@ -1,0 +1,12 @@
+package com.stormpath.tutorial;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JJWTMicroservicesTutorial {
+
+    public static void main(String[] args) {
+        SpringApplication.run(JJWTMicroservicesTutorial.class, args);
+    }
+}
