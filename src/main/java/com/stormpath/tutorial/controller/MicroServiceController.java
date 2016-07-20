@@ -2,8 +2,8 @@ package com.stormpath.tutorial.controller;
 
 import com.stormpath.tutorial.model.AccountResponse;
 import com.stormpath.tutorial.model.JWTResponse;
+import com.stormpath.tutorial.service.AccountService;
 import com.stormpath.tutorial.service.SecretService;
-import com.stormpath.tutorial.util.AccountResolver;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.lang.Assert;
@@ -22,11 +22,14 @@ public class MicroServiceController extends BaseController {
     @Autowired
     SecretService secretService;
 
+    @Autowired
+    AccountService accountService;
+
     @RequestMapping("/auth-builder")
     public JWTResponse authBuilder(@RequestBody Map<String, Object> claims) {
         Assert.notNull(
-            claims.get(AccountResolver.USERNAME_CLAIM),
-            AccountResolver.USERNAME_CLAIM + " claim is required."
+            claims.get(AccountService.USERNAME_CLAIM),
+            AccountService.USERNAME_CLAIM + " claim is required."
         );
 
         Date now = new Date();
@@ -48,6 +51,6 @@ public class MicroServiceController extends BaseController {
 
     @RequestMapping("/restricted")
     public AccountResponse restricted(HttpServletRequest req) {
-        return AccountResolver.INSTANCE.getAccount(req, secretService);
+        return accountService.getAccount(req);
     }
 }

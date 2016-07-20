@@ -1,9 +1,9 @@
-package com.stormpath.tutorial.util;
+package com.stormpath.tutorial.service;
 
 import com.stormpath.tutorial.exception.UnauthorizedException;
 import com.stormpath.tutorial.model.Account;
 import com.stormpath.tutorial.model.AccountResponse;
-import com.stormpath.tutorial.service.SecretService;
+import com.stormpath.tutorial.model.BaseResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -11,33 +11,40 @@ import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.lang.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.stormpath.tutorial.model.BaseResponse.Status;
+@Service
+public class AccountService {
 
-public class DefaultAccountResolver implements AccountResolver {
+    @Autowired
+    SecretService secretService;
 
-    private static final Logger log = LoggerFactory.getLogger(AccountResolver.class);
+    public static final String USERNAME_CLAIM = "userName";
+
     private static final String BEARER_IDENTIFIER = "Bearer "; // space is important
+    private static final Logger log = LoggerFactory.getLogger(AccountService.class);
 
     private Map<String, Account> accounts;
 
-    public DefaultAccountResolver() {
+    @PostConstruct
+    void setup() {
         accounts = new HashMap<>();
         accounts.put("anna", new Account("Anna", "Apple", "anna"));
         accounts.put("betty", new Account("Betty", "Baker", "betty"));
         accounts.put("colin", new Account("Colin", "Cooper", "colin"));
     }
 
-    public AccountResponse getAccount(HttpServletRequest req, SecretService secretService) {
+    public AccountResponse getAccount(HttpServletRequest req) {
         Assert.notNull(req);
-        Assert.notNull(secretService);
 
         AccountResponse accountResponse = new AccountResponse();
-        accountResponse.setStatus(Status.ERROR);
+        accountResponse.setStatus(BaseResponse.Status.ERROR);
 
         // get JWT as Authorization header
         String authorization = req.getHeader("Authorization");
@@ -71,9 +78,10 @@ public class DefaultAccountResolver implements AccountResolver {
         }
 
         accountResponse.setMessage("Found Account");
-        accountResponse.setStatus(Status.SUCCESS);
+        accountResponse.setStatus(BaseResponse.Status.SUCCESS);
         accountResponse.setAccount(accounts.get(userName));
 
         return accountResponse;
     }
+
 }
