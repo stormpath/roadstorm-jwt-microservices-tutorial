@@ -52,7 +52,7 @@ public class SecretService {
             if (key == null) {
                 throw new JwtException("No public key registered for kid: " + kid + ". JWT claims: " + claims);
             }
-            return publicKeys.get(header.getKeyId());
+            return key;
         }
     };
 
