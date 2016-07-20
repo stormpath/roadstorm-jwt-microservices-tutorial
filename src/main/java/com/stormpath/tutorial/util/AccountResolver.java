@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface AccountResolver {
 
-    public static final AccountResolver INSTANCE = new DefaultAccountResolver();
-    public static final String USERNAME_CLAIM = "userName";
+    AccountResolver INSTANCE = new DefaultAccountResolver();
+    String USERNAME_CLAIM = "userName";
 
-    public AccountResponse getAccount(HttpServletRequest req, SecretService secretService);
+    AccountResponse getAccount(HttpServletRequest req, SecretService secretService);
 }

@@ -30,7 +30,7 @@ public class MicroServiceController extends BaseController {
         );
 
         Date now = new Date();
-        Date exp = new Date(System.currentTimeMillis() + (1000*60)); // 60 seconds
+        Date exp = new Date(now.getTime() + (1000*60)); // 60 seconds
 
         String jwt =  Jwts.builder()
             .setHeaderParam("kid", secretService.getMyPublicCreds().getKid())

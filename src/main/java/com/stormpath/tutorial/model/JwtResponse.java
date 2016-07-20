@@ -8,7 +8,7 @@ import io.jsonwebtoken.Jws;
 public class JwtResponse extends BaseResponse {
     private String exceptionType;
     private String jwt;
-    private Jws<Claims> jws;
+    private Jws<Claims> jwsClaims;
 
     public JwtResponse() {}
 
@@ -17,8 +17,8 @@ public class JwtResponse extends BaseResponse {
         setStatus(Status.SUCCESS);
     }
 
-    public JwtResponse(Jws<Claims> jws) {
-        this.jws = jws;
+    public JwtResponse(Jws<Claims> jwsClaims) {
+        this.jwsClaims = jwsClaims;
         setStatus(Status.SUCCESS);
     }
 
@@ -38,11 +38,11 @@ public class JwtResponse extends BaseResponse {
         this.jwt = jwt;
     }
 
-    public Jws<Claims> getJws() {
-        return jws;
+    public Jws<Claims> getJwsClaims() {
+        return jwsClaims;
     }
 
-    public void setJws(Jws<Claims> jws) {
-        this.jws = jws;
+    public void setJwsClaims(Jws<Claims> jwsClaims) {
+        this.jwsClaims = jwsClaims;
     }
 }
