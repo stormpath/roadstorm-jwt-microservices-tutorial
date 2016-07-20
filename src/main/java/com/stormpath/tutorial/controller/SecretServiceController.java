@@ -1,6 +1,6 @@
 package com.stormpath.tutorial.controller;
 
-import com.stormpath.tutorial.model.JwtResponse;
+import com.stormpath.tutorial.model.JWTResponse;
 import com.stormpath.tutorial.model.PublicCreds;
 import com.stormpath.tutorial.service.SecretService;
 import io.jsonwebtoken.Claims;
@@ -40,7 +40,7 @@ public class SecretServiceController extends BaseController {
     }
 
     @RequestMapping("/test-build")
-    public JwtResponse testBuild() {
+    public JWTResponse testBuild() {
         String jws = Jwts.builder()
             .setHeaderParam("kid", secretService.getMyPublicCreds().getKid())
             .setIssuer("Stormpath")
@@ -54,15 +54,15 @@ public class SecretServiceController extends BaseController {
                 secretService.getMyPrivateKey()
             )
             .compact();
-        return new JwtResponse(jws);
+        return new JWTResponse(jws);
     }
 
     @RequestMapping("/test-parse")
-    public JwtResponse testParse(@RequestParam String jwt) {
+    public JWTResponse testParse(@RequestParam String jwt) {
         Jws<Claims> jwsClaims = Jwts.parser()
             .setSigningKeyResolver(secretService.getSigningKeyResolver())
             .parseClaimsJws(jwt);
 
-        return new JwtResponse(jwsClaims);
+        return new JWTResponse(jwsClaims);
     }
 }

@@ -1,7 +1,7 @@
 package com.stormpath.tutorial.controller;
 
 import com.stormpath.tutorial.model.AccountResponse;
-import com.stormpath.tutorial.model.JwtResponse;
+import com.stormpath.tutorial.model.JWTResponse;
 import com.stormpath.tutorial.service.SecretService;
 import com.stormpath.tutorial.util.AccountResolver;
 import io.jsonwebtoken.Jwts;
@@ -23,7 +23,7 @@ public class MicroServiceController extends BaseController {
     SecretService secretService;
 
     @RequestMapping("/auth-builder")
-    public JwtResponse authBuilder(@RequestBody Map<String, Object> claims) {
+    public JWTResponse authBuilder(@RequestBody Map<String, Object> claims) {
         Assert.notNull(
             claims.get(AccountResolver.USERNAME_CLAIM),
             AccountResolver.USERNAME_CLAIM + " claim is required."
@@ -43,7 +43,7 @@ public class MicroServiceController extends BaseController {
                 secretService.getMyPrivateKey()
             )
             .compact();
-        return new JwtResponse(jwt);
+        return new JWTResponse(jwt);
     }
 
     @RequestMapping("/restricted")

@@ -1,5 +1,6 @@
 package com.stormpath.tutorial.util;
 
+import com.stormpath.tutorial.exception.UnauthorizedException;
 import com.stormpath.tutorial.model.Account;
 import com.stormpath.tutorial.model.AccountResponse;
 import com.stormpath.tutorial.service.SecretService;
@@ -40,13 +41,9 @@ public class DefaultAccountResolver implements AccountResolver {
 
         // get JWT as Authorization header
         String authorization = req.getHeader("Authorization");
-        Assert.notNull(authorization, "No Authorization Header on the request");
-
-        // make sure it's bearer
-        Assert.isTrue(
-            authorization.startsWith(BEARER_IDENTIFIER),
-            "Authorization header is not a Bearer token: " + authorization
-        );
+        if (authorization == null || !authorization.startsWith(BEARER_IDENTIFIER)) {
+            throw new UnauthorizedException("Missing or invalid Authorization header with Bearer type.");
+        }
 
         String jwt = authorization.substring(BEARER_IDENTIFIER.length());
 

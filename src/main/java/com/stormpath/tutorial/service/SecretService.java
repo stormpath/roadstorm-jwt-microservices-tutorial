@@ -81,7 +81,12 @@ public class SecretService {
         myKeyPair = RsaProvider.generateKeyPair(1024);
         kid = UUID.randomUUID().toString();
 
-        return getMyPublicCreds();
+        PublicCreds publicCreds = getMyPublicCreds();
+
+        // this microservice will trust itself
+        addPublicCreds(publicCreds);
+
+        return publicCreds;
     }
 
     public void addPublicCreds(PublicCreds publicCreds) {

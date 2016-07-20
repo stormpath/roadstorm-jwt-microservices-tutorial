@@ -5,19 +5,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JwtResponse extends BaseResponse {
+public class JWTResponse extends BaseResponse {
     private String exceptionType;
     private String jwt;
     private Jws<Claims> jwsClaims;
 
-    public JwtResponse() {}
+    public JWTResponse() {}
 
-    public JwtResponse(String jwt) {
+    public JWTResponse(String jwt) {
         this.jwt = jwt;
         setStatus(Status.SUCCESS);
     }
 
-    public JwtResponse(Jws<Claims> jwsClaims) {
+    public JWTResponse(Jws<Claims> jwsClaims) {
         this.jwsClaims = jwsClaims;
         setStatus(Status.SUCCESS);
     }
