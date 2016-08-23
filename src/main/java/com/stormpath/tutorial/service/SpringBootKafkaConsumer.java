@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 @Service
-@ConditionalOnProperty(name = "stormpath.kafka.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "kafka.enabled", matchIfMissing = true)
 public class SpringBootKafkaConsumer {
 
     @Value("${kafka.broker.address}")

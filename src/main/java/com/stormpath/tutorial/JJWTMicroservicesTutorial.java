@@ -46,7 +46,7 @@ public class JJWTMicroservicesTutorial {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "stormpath.kafka.enabled", matchIfMissing = true)
+    @ConditionalOnProperty(name = "kafka.enabled", matchIfMissing = true)
     public TopicCreator topicCreator() {
         return new TopicCreator(this.topic, this.zookeeperAddress);
     }

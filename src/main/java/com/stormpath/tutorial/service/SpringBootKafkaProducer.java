@@ -13,7 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 @Service
-@ConditionalOnProperty(name = "stormpath.kafka.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "kafka.enabled", matchIfMissing = true)
 public class SpringBootKafkaProducer {
 
     @Value("${kafka.broker.address}")
