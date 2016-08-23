@@ -50,7 +50,7 @@ so you can communicate between them.
 
 ## Service Registry
 
-Note: all service to service communication examples below uses [httpie](https://github.com/jkbrzt/httpie)
+Note: all service to service communication examples below use [httpie](https://github.com/jkbrzt/httpie)
 
 When the application is launched, a private/public keypair is automatically created. All operations involving keys
 are handled via the `SecretService` service and exposed via endpoints in the `SecretServiceController`.
