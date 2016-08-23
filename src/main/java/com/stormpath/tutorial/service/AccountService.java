@@ -43,9 +43,6 @@ public class AccountService {
     public AccountResponse getAccount(HttpServletRequest req) {
         Assert.notNull(req);
 
-        AccountResponse accountResponse = new AccountResponse();
-        accountResponse.setStatus(BaseResponse.Status.ERROR);
-
         // get JWT as Authorization header
         String authorization = req.getHeader("Authorization");
         if (authorization == null || !authorization.startsWith(BEARER_IDENTIFIER)) {
@@ -53,6 +50,13 @@ public class AccountService {
         }
 
         String jwt = authorization.substring(BEARER_IDENTIFIER.length());
+
+        return getAccount(jwt);
+    }
+
+    public AccountResponse getAccount(String jwt) {
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setStatus(BaseResponse.Status.ERROR);
 
         // verify JWT - will throw JWT Exception if not valid
         Jws<Claims> jws = Jwts.parser()
@@ -83,5 +87,4 @@ public class AccountService {
 
         return accountResponse;
     }
-
 }

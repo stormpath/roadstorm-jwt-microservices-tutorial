@@ -1,6 +1,5 @@
 package com.stormpath.tutorial.controller;
 
-import com.stormpath.tutorial.model.AccountResponse;
 import com.stormpath.tutorial.model.JWTResponse;
 import com.stormpath.tutorial.service.AccountService;
 import com.stormpath.tutorial.service.SecretService;
@@ -12,20 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
-public class MicroServiceController extends BaseController {
+public class HttpMicroServiceController extends BaseController {
 
     @Autowired
     SecretService secretService;
 
-    @Autowired
-    AccountService accountService;
-
-    @RequestMapping("/auth-builder")
+    @RequestMapping("/account-request")
     public JWTResponse authBuilder(@RequestBody Map<String, Object> claims) {
         Assert.notNull(
             claims.get(AccountService.USERNAME_CLAIM),
@@ -46,11 +42,7 @@ public class MicroServiceController extends BaseController {
                 secretService.getMyPrivateKey()
             )
             .compact();
-        return new JWTResponse(jwt);
-    }
 
-    @RequestMapping("/restricted")
-    public AccountResponse restricted(HttpServletRequest req) {
-        return accountService.getAccount(req);
+        return new JWTResponse(jwt);
     }
 }
