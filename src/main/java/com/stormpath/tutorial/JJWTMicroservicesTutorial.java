@@ -34,7 +34,7 @@ public class JJWTMicroservicesTutorial {
 
         boolean shouldConsume = context
             .getEnvironment()
-            .getProperty("stormpath.kafka.consumer.enabled", Boolean.class, Boolean.FALSE);
+            .getProperty("kafka.consumer.enabled", Boolean.class, Boolean.FALSE);
 
 
         if (shouldConsume && context.containsBean("springBootKafkaConsumer")) {
