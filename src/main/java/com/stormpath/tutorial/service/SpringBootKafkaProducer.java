@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@ConditionalOnProperty(name = "stormpath.kafka.enabled", matchIfMissing = true)
 public class SpringBootKafkaProducer {
 
     @Value("${kafka.broker.address}")
@@ -23,7 +25,7 @@ public class SpringBootKafkaProducer {
     private Producer<String, String> producer;
 
     @PostConstruct
-    public void initIt() {
+    public void init() {
         Properties kafkaProps = new Properties();
 
         kafkaProps.put("bootstrap.servers", brokerAddress);
@@ -38,7 +40,6 @@ public class SpringBootKafkaProducer {
         kafkaProps.put("linger.ms", 5);
 
         producer = new KafkaProducer<>(kafkaProps);
-
     }
 
     public void send(String value) throws ExecutionException, InterruptedException {

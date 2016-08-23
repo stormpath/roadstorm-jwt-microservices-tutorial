@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
@@ -35,20 +36,22 @@ public class JJWTMicroservicesTutorial {
             .getEnvironment()
             .getProperty("stormpath.kafka.consumer.enabled", Boolean.class, Boolean.FALSE);
 
-        if (shouldConsume) {
-            SpringBootKafkaConsumer springBootKafkaConsumer = context
-                .getBean("springBootKafkaConsumer", SpringBootKafkaConsumer.class);
+
+        if (shouldConsume && context.containsBean("springBootKafkaConsumer")) {
+            SpringBootKafkaConsumer springBootKafkaConsumer =
+                context.getBean("springBootKafkaConsumer", SpringBootKafkaConsumer.class);
 
             springBootKafkaConsumer.consume();
         }
     }
 
     @Bean
+    @ConditionalOnProperty(name = "stormpath.kafka.enabled", matchIfMissing = true)
     public TopicCreator topicCreator() {
         return new TopicCreator(this.topic, this.zookeeperAddress);
     }
 
-    public static class TopicCreator implements SmartLifecycle {
+    private static class TopicCreator implements SmartLifecycle {
 
         private final String topic;
 
