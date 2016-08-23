@@ -2,10 +2,10 @@
 
 The purpose of this tutorial is to demonstrate how the [JJWT](https://github.com/jwtk/jjwt) library can be used to secure microservices.
 
-The only dependencies for interacting purley with HTTP are the Spring Boot Web Starter and the JJWT library.
+The only dependencies for interacting purely with HTTP are the Spring Boot Web Starter and the JJWT library.
 
 There's also a messaging mode (disabled by default) that requires [Kafka](http://kafka.apache.org/documentation.html#quickstart). 
-All you need to do is follow steps on and two in the Kafka quickstart to get it setup for use with this example.
+All you need to do is follow steps one and two in the Kafka quickstart to get it setup for use with this tutorial.
 
 Wondering what JWTs and/or the JJWT library is all about? Click [here](https://java.jsonwebtoken.io).
 
@@ -162,8 +162,8 @@ This time, our second microservice is able to parse the JWT from the first micro
 
 ## Account Resolution
 
-In this part of the example, we introduce an `AccountResolver`. This interface exposes an `INSTANCE` that can then be used to lookup an `Account`.
-For the purposes of the example, three accounts are setup that represent the "database" of accounts.
+In this part of the tutorial, we introduce an `AccountResolver`. This interface exposes an `INSTANCE` that can then be used to lookup an `Account`.
+For the purposes of the tutorial, three accounts are setup that represent the "database" of accounts.
 
 The `AccountResolver` implementation expects a JWT that has a `userName` claim that will be used to lookup the account.
 
@@ -172,7 +172,7 @@ Like before, the public key of the microservice that created the JWT will need t
  
 The `MicroServiceController` exposes two endpoints to manage these interactions:
 
-1. `/auth-builder` - Generate a JWT with a 60-second expiration. It can take in any number of claims. `userName` claim is required.
+1. `/account-request` - Generate a JWT with a 60-second expiration. It can take in any number of claims. `userName` claim is required.
 2. `/restricted` - Return an `Account` based on processing a bearer token
  
 Let's see this in action. Note: this assumes that you've registered the public key from the first microservice with the second microservice.
@@ -288,7 +288,7 @@ Follow these steps to use the messaging mode of the sample app:
         ERROR Unable to get account: No public key registered for kid: 6b9ee19a-f174-4c77-aa96-922aba8a7879. JWT claims: {userName=anna, iat=1471971569, nbf=1471971569, exp=1471971629}
         ```
         
-        The good news is that the consumer got the message. The bad news is that the `8081` microservice doesn't trust the `8080` microservice. That is, the `8080` microwservice has not registered its public key with the `8081` microservice, so there's no way for it to verify the signature of the JWT that was created with teh `8080` microservice's private key.
+        The good news is that the consumer got the message. The bad news is that the `8081` microservice doesn't trust the `8080` microservice. That is, the `8080` microservice has not registered its public key with the `8081` microservice, so there's no way for it to verify the signature of the JWT that was created with teh `8080` microservice's private key.
         
     2. Establish trust
     
